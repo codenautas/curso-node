@@ -26,9 +26,45 @@ Si bien Javascript no es fuertemente tipado (no hace el control en el momento de
 tipo de datos | explicacion
 --------------|------------
 `boolean`     | `true` y `false` (es lo que devuelven por ejemplo las comparaciones `===`, `<`, etc
-`numeric`     | los números. Ojo que son de punto flotante y tienen los mismos problemas que en cualquier otro lenguaje (ej `0.1 + 0.2` no es igual a `0.3`
+`numeric`     | los números. Ojo que son de punto flotante y tienen los mismos problemas que en cualquier otro lenguaje (ej `0.1 + 0.2` no es igual a `0.3`)
 `string`      | las cadenas de texto. En javascript no existe el tipo para un solo caracter
 `object`      | todos los demás objetos, incluidas las funciones
 `undefined`   | las variables no definidas, los miembros que no están en un objeto y las funciones que no retornan nada
 `null`        | el valor `null` explícito cuando quiero tener un `return` que no devuelve nada se pone `return null;`
 
+## Una forma de usar objetos
+
+Sin usar clases
+
+```js
+> var animal={come:true, camina:true}
+undefined
+> animal
+{ come: true, camina: true }
+> var perro=Object.create(animal);
+undefined
+> perro
+{}
+> perro.come
+true
+> perro.ladra=true
+true
+> animal.ladra
+undefined
+> perro.prototype
+undefined
+> perro.__proto__
+{ come: true, camina: true }
+> animal.habla=true // le enseñamos a hablar a todos los animales mágicamente
+true
+> perro.habla
+true
+> var gato=Object.create(animal);
+undefined
+> gato.come
+true
+> gato.habla=false // perdió la magia
+false
+> perro.habla
+true
+```
