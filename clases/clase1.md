@@ -18,3 +18,17 @@ Javascript puede usarse como lenguaje con programación funcional.
 Javascript puede usarse también como lenguaje orientado a objetos (si bien la sintaxis no es la típica), 
 pero permite tener objetos, clases y herencia entre clases.
 
+# Javascript
+
+## Tipos de datos
+Si bien Javascript no es fuertemente tipado (no hace el control en el momento de asignar variables o pasar parámetros), sí tiene tipos. Los tipos de datos son:
+
+tipo de datos | explicacion
+--------------|------------
+`boolean`     | `true` y `false` (es lo que devuelven por ejemplo las comparaciones `===`, `<`, etc
+`numeric`     | los números. Ojo que son de punto flotante y tienen los mismos problemas que en cualquier otro lenguaje (ej `0.1 + 0.2` no es igual a `0.3`
+`string`      | las cadenas de texto. En javascript no existe el tipo para un solo caracter
+`object`      | todos los demás objetos, incluidas las funciones
+`undefined`   | las variables no definidas, los miembros que no están en un objeto y las funciones que no retornan nada
+`null`        | el valor `null` explícito cuando quiero tener un `return` que no devuelve nada se pone `return null;`
+
