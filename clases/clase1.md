@@ -1,5 +1,5 @@
 # Clase 1
-1/9/2015
+1/9/2015, notas tomadas de la clase dada por https://github.com/gabmontes
 
 # Introducción
 
@@ -34,8 +34,6 @@ tipo de datos | explicacion
 
 ## Una forma de usar objetos
 
-Sin usar clases
-
 ```js
 > var animal={come:true, camina:true}
 undefined
@@ -67,4 +65,58 @@ true
 false
 > perro.habla
 true
+true
+> var gato=Object.create(animal);
+undefined
+> gato.come
+true
+> gato.habla=false
+false
+> function Caballo(){}
+undefined
+> var caballo=new Caballo()
+undefined
+> caballo
+{}
+> Caballo.prototype.galopa = true
+true
+> caballo.__proto__
+{ galopa: true }
+> gato.habla
+false
+> delete gato.habla
+true
+> gato.habla
+true
+```
+
+## Programación funcional
+
+Ejemplos de como usar funciones como parámetros
+
+```js
+> var nombres = ["Ana", "Marta", "Lorena"]
+undefined
+> nombres
+[ 'Ana', 'Marta', 'Lorena' ]
+> nombres.map(function(nombre){ return nombre.toLowerCase(); })
+[ 'ana', 'marta', 'lorena' ]
+> nombres.map(function(nombre){ return nombre.toLowerCase(); }).map(function(nombre){ return nombre+'!'; })
+[ 'ana!', 'marta!', 'lorena!' ]
+> nombres.filter(function(nombre){ return nombre=='Ana'; })
+[ 'Ana' ]
+> var nombres = ["Ana", "Marta", "Lorena", "Ana", "Susana"]
+undefined
+> nombres.reduce(function(previo, nombre){ return nombre=='Ana'? previo+1: previo },0)
+2
+> function contarAnas(nombres){ 
+    return nombres.reduce(function(previo, nombre){
+       return nombre=='Ana'? previo+1: previo 
+    },0); 
+  }
+undefined
+> contarAnas(['pepe'])
+0
+> contarAnas(['pepe', 'Ana'])
+1
 ```
