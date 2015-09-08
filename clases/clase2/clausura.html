@@ -1,0 +1,20 @@
+<html>
+  <head>
+     <script>
+        /*Entró con el debugger*/
+        function crearPrefijo(prefijo) { //2)Entro en la función, me dice con qué la llamé. Me dice, además, que estoy en un alcance local y como el intérpre ya leyó todo, sabe, por ejemplo que existe str, aunque está undefined.
+            var str = prefijo + " "; //3)Cuando ejecuto esto, ya sabe cuánto vale str
+
+            return function (nombre) {// 4) Cuando vengo acá, crea la función, pero no la llama y salta a la última línea, la 11. Entonces salta a la línea 14, porque con la 13 ya terminó. 
+                return str + nombre; //5)Y me dice que la llamé con nombre Gonzales. Acá el navegador entiende que hay un scope global, uno local y un clausure, que adentro tiene definido el str
+            }
+        }
+
+        var prefijarDr = crearPrefijo("Dr."); // 1) Hasta acá veo mi objeto global. Con Breakpoint en esta línea.
+        prefijarDr("Gonzalez"); // Dr. Gonzalez 5) Cuando ejecuto esto, salta a la línea 9
+     </script>
+  </head>
+  <body>
+    Prueba
+  </body>
+</html>
