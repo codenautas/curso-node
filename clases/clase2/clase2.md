@@ -51,10 +51,14 @@ function pruebaHoisting() {
 Esto es equivalente a:
 
 ```js
-function pruebaHoisting() {
+function pruebaHoisting(x) {
     var nombre;
     console.log(nombre); // undefined
-    var nombre = "Juan";
+    if(x){
+        nombre = x.nombre;
+    }else{
+        nombre = "Juan";
+    }
     console.log(nombre); // Juan
 }
 pruebaHoisting();
