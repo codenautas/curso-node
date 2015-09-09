@@ -35,9 +35,13 @@ Las variables se definen con la palabra clave 'var'. Las variables tiene alcance
 
 Otra particularidad del lenguaje el hoisting. Todas las variables que defino dentro de una función por más que las defina en cualquier lado de la función, lo que hace el intérprete es primero leer todo, encuentra las variables, las da por conocidas y después ejecuta la función asignando valores. No asigna, pero sabe que está definida. Después ejecuta y da a conocer el valor.
 
-```js 
->function pruebaHoisting() {
-    console.log(nombre); // undefined
+```js
+var nombre='global1';
+var nombre2='global2';
+
+function pruebaHoisting() {
+    console.log(nombre); // undefined porque existe var nombre dentro y abajo
+    console.log(nombre2); // global2
     var nombre = "Juan";
     console.log(nombre); // Juan
 }
