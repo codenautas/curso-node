@@ -1,18 +1,7 @@
-function aMinusculas(palabra) {
-    return palabra.toLowerCase();
+function suma(arreglo){
+    var suma=0;
+    for(i=0;i<arreglo.length;i++){
+        var suma=suma+arreglo[i];
+    }
+    return suma;
 }
-
-function aMayusculas(palabra) {
-    return palabra.toUpperCase();
-}
-
-function obtenerUsuarios() {
-    return new Promise(function (fulfill) {
-        setTimeout(function () {
-            var usuarios = ["Juan", "Ana", "Pedro"];
-            fulfill(usuarios);
-        }, 5000); // demora 250 ms
-    });
-}
-
-var promesa= obtenerUsuarios();
