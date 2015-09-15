@@ -29,35 +29,15 @@ function notificarError(mensaje) {
 
 /////////////////////////////////////////////////////////
 function login(nombre) {
-    obtenerUsuario(nombre).then(function(rol){
-        solicitarRegistro();
-         var datos={};
-         datos.nombre=nombre;
-         datos.rol=rol.rol;
-        return datos;
-    }).then(function(datos){
-        registrarAcceso(datos.nombre,datos.rol);
+    
+    return obtenerUsuario(nombre).then(function(rol){
+         registrarAcceso(nombre,rol.rol);
     }).catch(function(err){
+        solicitarRegistro();
         notificarError(err);
     });
 }
 ////////////////////////////////////////////////////////
-
-// $$$$$$$$$$$$$$$$$$$$$
-function login(nombre) {
-    obtenerUsuario(nombre).then(function(trae){
-        solicitarRegistro();
-         var rol=trae.rol;
-        return {nombre,rol};
-    }).then(function(datos){
-        registrarAcceso(datos.nombre,datos.rol);
-    }).catch(function(err){
-        notificarError(err);
-    });
-}
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
- 
- 
 
 /*Extender la función login para que pueda encadenarse una operación adicional en la cadena de promesas, llamando a la siguiente función en caso de un ingreso exitoso:*/
 
@@ -66,25 +46,24 @@ function registrarEstadísticas(datos) {
 }
 
 function login(nombre) {
-    return new Promise(function(fulfill,reject){
-        obtenerUsuario(nombre).then(function(rol){
-            solicitarRegistro();
-             var datos={};
-             datos.nombre=nombre;
-             datos.rol=rol.rol;
-            return datos;
-        }).then(function(datos){
-            registrarAcceso(datos.nombre,datos.rol);
-            fulfill(datos);
-        }).catch(function(err){
-            notificarError(err);
-            reject(err);
-        });
-        
+    
+    return obtenerUsuario(nombre).then(function(rol){
+         registrarAcceso(nombre,rol.rol);
+        var datos={
+            nombre:nombre,
+            rol:rol.rol
+        };
+        return datos; 
+    }).catch(function(err){
+        solicitarRegistro();
+        notificarError(err);
     });
 }
 login("Pedro").then(registrarEstadísticas).catch(function(err){
     console.log(err);
 })
+
+
+
 // Usuario Pedro ingresa como invitado
 // Estadísticas agregadas: Pedro, invitado, Sep 05 2015
