@@ -1,4 +1,4 @@
-// function suma(){
+ // function suma(){
     // var arreglo=process.argv;
     // var suma=0;
     // for(i=2;i<arreglo.length;i++){
