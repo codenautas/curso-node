@@ -7,14 +7,15 @@ Crear un programa que renombre un archivo recibiendo dos parámetros: nombre actu
 var fs=require('fs');
 var path=require('path');
 
-var oldPath=String(process.argv[2]);
-var newPath=String(process.argv[3]);
+// var oldPath=String(process.argv[2]);
+// var newPath=String(process.argv[3]);
+var actualPath=process.cwd()+'\\';
+var oldPath=actualPath+String(process.argv[2]);
+var newPath=actualPath+String(process.argv[3]);
 
-
-// c:\hecho\npm\curso-node\clases\clase4\prueba.txt
-// c:\\hecho\npm\curso-node\clases\clase4\prueba1.txt
 
 fs.rename(oldPath,newPath,function(){
+    console.log(actualPath);
     callback(newPath);
 })
 
