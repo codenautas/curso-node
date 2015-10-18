@@ -1,14 +1,14 @@
 <h2>Alta de nuevo libro</h2>
-<form>
+<form ng-submit="vm.modificar()">
     <div>
-        Título: <input type="text">
+        Título: <input type="text" ng-model="vm.libro.titulo">
     </div>
     <div>
-        Autor: <input type="text">
+        Autor: <input type="text" ng-model="vm.libro.autor">
     </div>
     <div>
-        Precio: <input type="number">
+        Precio: <input type="number" ng-model="vm.libro.precio">
     </div>
     <br>
-    <button type="submit">Enviar</button>
+    <button type="submit">{{(vm._id ? "Modificar" : "Crear")}}</button>
 </form>
