@@ -25,7 +25,7 @@ app.post("/productos", function (req, res, next) {
     });
 });
 
-var port=3000;
+var port=3002;
 
 app.listen(port, function () {
     console.log("Servidor iniciado en el puerto",port);
