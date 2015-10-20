@@ -1,0 +1,23 @@
+<h2>Lista de libros</h2>
+<table ng-show="vm.libros.length">
+    <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </tr>
+    <tr ng-repeat="libro in vm.libros | orderBy:'titulo'">
+        <td>{{libro.titulo}}</td>
+        <td>{{libro.autor}}</td>
+        <td>{{libro.precio}}</td>
+        <td>
+            <button type="button" ng-click="vm.editar(libro._id)">Editar</button>
+            <button type="button" ng-click="vm.eliminar(libro._id)">Eliminar</button>
+        </td>
+    </tr>
+</table>
+<div ng-hide="vm.libros.length">
+    No hay libros
+</div>
+<h2>Alta de nuevos libros</h2>
+<button type="button" ng-click="vm.crear()">Crear</button>
