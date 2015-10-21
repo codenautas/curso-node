@@ -1,0 +1,1 @@
+node read.js archivo.txt
