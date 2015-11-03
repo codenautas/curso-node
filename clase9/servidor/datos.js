@@ -7,7 +7,7 @@ types.setTypeParser(1700, function(val) {
   return val ? Number(val): null;
 });
 
-var connString = "postgres://postgres:admin1234@localhost/libros_db";
+var connString = "postgres://postgres:admin1234@localhost:5435/libros_db";
 /* Funciones agregadas para el manejo de Bd */
 function getPgClient(callback) {
     pg.connect(connString, function (err, client, done) {
