@@ -2,6 +2,7 @@
 //var libros = [];
 var pg = require('pg');
 var types = require('pg').types;
+var crypto = require("crypto");
 
 types.setTypeParser(1700, function(val) {
   return val ? Number(val): null;
@@ -97,6 +98,29 @@ module.exports = {
             });
 
         }
-    }
+    },
+	login: {
+	    validar: function(nombre,clave,callback) {
+		    var query = "SELECT * from usuarios where nombre=$1";
+			queryPgParams(query, [nombre], function(err,results) {
+			      if (err) {
+                     callback(err);
+					 return;
+				  }
+				  var usuario = results.rows[0];
+				  var hash = crypto
+				      .createHash('md5')
+					  .update(clave)
+					  .digest('hex');
+				  if (hash === usuario.hash){
+				      callback(null, {
+                          nombre: usuario.nombre
+					  });
+				  } else {
+				    callback (null,null);
+				  }
+			})
+		}
+	}
 };
 
