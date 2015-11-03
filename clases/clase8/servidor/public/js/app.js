@@ -24,7 +24,7 @@ app.controller("listaLibros", function ($http, $location) {
 
     $http.get("/api/libros").then(function (response) {
         vm.libros = response.data;
-    });
+});
 
     vm.crear = function () {
         $location.url("/detalle");
@@ -48,7 +48,7 @@ app.controller("detalleLibro", function ($routeParams, $http, $location) {
 
     vm._id = $routeParams.id;
     vm.libro = {};
-    
+
     if (vm._id) {
         $http.get("/api/libros/" + vm._id).then(function (response) {
             vm.libro = response.data;
