@@ -17,3 +17,22 @@ CREATE TABLE libros
 INSERT INTO libros(_id, titulo, autor, precio)
 VALUES 
     (1,'titulo1','autor1',111);
+
+    
+    -- Table: libros
+
+ DROP TABLE usuarios;
+
+CREATE TABLE usuarios
+(
+  nombre character varying(50),
+  hash character varying(50) NOT NULL,
+  CONSTRAINT usuarios_pkey PRIMARY KEY (nombre)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE libros
+  OWNER TO postgres;
+
+INSERT INTO usuarios (nombre,hash) values ('prueba',md5('1234'))

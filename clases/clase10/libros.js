@@ -1,7 +1,5 @@
 var express = require("express");
-
 var datos = require("./datos");
-
 var router = express.Router();
 
 router.get("/", function (req, res, next) {
