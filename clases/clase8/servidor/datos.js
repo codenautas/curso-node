@@ -1,12 +1,11 @@
 var crypto = require('crypto');
 var pg = require('pg');
 var types = require('pg').types;
+var connString = require('./conn-string');
 
 types.setTypeParser(1700, function(val) {
     return val ? Number(val) : null;
 });
-
-var connString = "postgres://postgres:postgres@localhost/postgres";
 
 function getPgClient(callback) {
     pg.connect(connString, function (err, client, done) {
