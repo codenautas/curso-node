@@ -2,6 +2,12 @@ var app = angular.module("libros", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
+	      // login view definition
+        .when("/login", {
+            templateUrl: "vistas/login.html",
+            controller: "loginControler",
+            controllerAs: "vm"
+        })
         .when("/lista", {
             templateUrl: "vistas/lista.html",
             controller: "listaLibros",
@@ -15,6 +21,19 @@ app.config(function ($routeProvider) {
         .otherwise({
             redirectTo: "/lista"
         });
+});
+
+app.run(function($rootScope, $http, $location){
+	$rootScope.$on("$routeChangeStart", function(event, next){
+		$http.get("/api/logged/status").then(function(){
+			//$rootScope.loggedIn = true;
+			//console.log("session ok");
+		}, function(){
+			if($location.path() !== "/login"){
+				$location.url("/login?back=" + $location.url());
+			}
+		})
+	})
 });
 
 app.controller("listaLibros", function ($location, $http) {
@@ -68,4 +87,19 @@ app.controller("detalleLibro", function ($routeParams, $http, $location) {
        }
     };
 
+});
+
+
+app.controller("loginControler", function ($http, $location) {
+		var vm = this;
+		vm.login = function(){
+			$http.post("/api/login",{
+				nombre: vm.user,
+				clave: vm.pass
+			}).then(function(response){
+				//console.log("exitos!");
+				$location.url($location.search().back || "");
+				}, function(response){
+				 console.log("falla: " + response.statusText)});
+		};
 });

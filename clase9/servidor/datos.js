@@ -3,12 +3,12 @@
 var pg = require('pg');
 var types = require('pg').types;
 var crypto = require("crypto");
+var connString = require("./conn-string");
 
 types.setTypeParser(1700, function(val) {
   return val ? Number(val): null;
 });
 
-var connString = "postgres://postgres:admin1234@localhost:5435/libros_db";
 /* Funciones agregadas para el manejo de Bd */
 function getPgClient(callback) {
     pg.connect(connString, function (err, client, done) {
@@ -112,7 +112,7 @@ module.exports = {
 				      .createHash('md5')
 					  .update(clave)
 					  .digest('hex');
-				  if (hash === usuario.hash){
+				  if (usuario && hash === usuario.hash){
 				      callback(null, {
                           nombre: usuario.nombre
 					  });
