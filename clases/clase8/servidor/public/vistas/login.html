@@ -1,0 +1,13 @@
+<h2>Login</h2>
+<form ng-submit="vm.login()">
+    <div>
+        Nombre <input type="text" ng-model="vm.user"></input>
+    </div>
+    <div>
+        Clave <input type="password" ng-model="vm.pass"></input>
+    </div>
+    <input type="submit" value="Login">
+</form>
+<div ng-if="vm.mensajeError">
+    {{vm.mensajeError}}
+</div>

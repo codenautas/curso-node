@@ -2,6 +2,11 @@ var app = angular.module("libros", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
+        .when("/login", {
+            templateUrl: "vistas/login.html",
+            controller: "loginController",
+            controllerAs: "vm"
+        })
         .when("/lista", {
             templateUrl: "vistas/lista.html",
             controller: "listaLibros",
@@ -17,6 +22,18 @@ app.config(function ($routeProvider) {
         });
 });
 
+app.run(function ($rootScope, $http, $location) {
+    $rootScope.$on("$routeChangeStart", function () {
+        $http.get("/api/login/status").then(function () {
+            //
+        }, function () {
+            if ($location.path() !== "/login") {
+                $location.url("/login?back=" + $location.url());
+            }
+        });
+    });
+});
+
 app.controller("listaLibros", function ($http, $location) {
     var vm = this;
 
@@ -24,7 +41,7 @@ app.controller("listaLibros", function ($http, $location) {
 
     $http.get("/api/libros").then(function (response) {
         vm.libros = response.data;
-});
+    });
 
     vm.crear = function () {
         $location.url("/detalle");
@@ -35,7 +52,7 @@ app.controller("listaLibros", function ($http, $location) {
     };
 
     vm.eliminar = function (_id) {
-        $http.delete("/api/libros/" + _id).then(function (response) {
+        $http.delete("/api/libros/" + _id).then(function () {
             vm.libros = vm.libros.filter(function (libro) {
                 return libro._id !== _id;
             });
@@ -57,13 +74,32 @@ app.controller("detalleLibro", function ($routeParams, $http, $location) {
 
     vm.modificar = function () {
         if (vm._id) {
-            $http.put("/api/libros/" + vm._id, vm.libro).then(function (response) {
+            $http.put("/api/libros/" + vm._id, vm.libro).then(function () {
                 $location.url("/lista");
             });
         } else {
-            $http.post("/api/libros", vm.libro).then(function (response) {
+            $http.post("/api/libros", vm.libro).then(function () {
                 $location.url("/lista");
             });
         }
+    };
+});
+
+app.controller("loginController", function ($http, $location) {
+    var vm = this;
+
+    vm.login = function () {
+        $http.post("/api/login", {
+            nombre: vm.user,
+            clave: vm.pass
+        }).then(function () {
+            $location.url($location.search().back || "");
+        }, function (response) {
+            if (response.status === 401) {
+                vm.mensajeError = 'Usuario o clave inválidas'
+            } else {
+                vm.mensajeError = 'Error desconocido: ' + response.statusText;
+            }
+        });
     };
 });
