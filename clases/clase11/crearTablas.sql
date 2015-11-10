@@ -36,3 +36,11 @@ ALTER TABLE libros
   OWNER TO postgres;
 
 INSERT INTO usuarios (nombre,hash) values ('prueba',md5('1234'))
+
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;

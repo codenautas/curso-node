@@ -22,6 +22,18 @@ app.config(function ($routeProvider) {
         });
 });
 
+app.run(function($rootScope,$http,$location){
+    $rootScope.$on("$routeChangeStart",function(event, next){
+        $http.get('/api/logged/status').then(function(){
+             //$rootScope.loggedIn=true; 
+        },function(){
+            if($location.path() !== "/login"){
+                $location.url('/login?back='+$location.url());
+            }
+        });
+    });
+});
+
 app.controller("listaLibros", function ($location,$http) {
     var vm = this;
     vm.libros = [];
@@ -76,8 +88,7 @@ app.controller("loginController",function($http,$location){
             nombre: vm.user,
             clave:  vm.pass
         }).then(function(response){
-            console.log("Logueo correcto");
-            $location.url("/lista");
+            $location.url($location.search().back || "");
         },function(response){
             console.log("Falla: "+ response.statusText);
         });

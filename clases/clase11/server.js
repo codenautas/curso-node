@@ -21,8 +21,8 @@ app.use(session({
         pg: pg,                                  
         conString: connString
     }),
-    cookies:{
-        maxAge:1*60*1000
+    cookie:{
+        maxAge: 1 * 30 * 1000
     },
     resave:false,
     rolling:true,

@@ -32,4 +32,11 @@ router.post("/logout", function (req, res, next) {
     });
 });
 
+router.get('/logged/status',function(req,res,next){
+    if(req.session.user){
+        res.end();
+    }else{
+        res.status(401).end();
+    }
+})
 module.exports=router;
