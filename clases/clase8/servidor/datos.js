@@ -113,7 +113,7 @@ module.exports = {
                     .update(clave)
                     .digest('hex');
 
-                if (hash === usuario.hash) {
+                if (usuario && usuario.hash === hash) {
                     callback(null, {
                         nombre: usuario.nombre
                     });
