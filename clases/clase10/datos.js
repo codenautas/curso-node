@@ -1,7 +1,7 @@
 var seq = 0;
 var libros = [];
 var pg = require('pg');
-var connString = "postgres://postgres:admin1234@localhost/libros_db";
+var connString = "postgres://postgres:admin1234@localhost:5435/libros_db";
 var types= require('pg').types;
 var crypto=require("crypto");
 

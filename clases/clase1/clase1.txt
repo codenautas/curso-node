@@ -1,0 +1,39 @@
+Node
+Permite desde cualquier lugar le doy un archivo js y node lo ejecuta y ese archivo js tiene acceso a todos los recursos de la computadora. No está la parte gráfica. Es una parte del browser + todo el acceso a la red de la compu. Se puede utilizar para crear la lógica atrás de un servidor y otras cosas: conectarse a una base de datos, hacer consultas; lo que se podría hacer con un bash para automatizar tareas, también se pueden hacer con node.
+Arquitectura + librerías, hicieron de node un buen sistema muy elegido por los usuarios. 
+
+JavaScript
+Es tradicional: deriva de C
+Es atípico: tiene cosas como que una función puede devolver una función.
+Es un lenguaje de programación interpretado, no compilado, que carga cosas dinámicamente. El modelo de programación está orientado a eventos. Se incorpora el concepto de hilos de ejecución. Hay un sólo hilo de ejecución que no blockea el programa del lado del programador. Si hay un blockeo, lo maneja el motor de java internamente y avisa en un evento. Todas las acciones asíncronas devuelven un evento. 
+
+Manejo de objetos en JS
+No es la manera tradicional: Clases, instancia, herencias. Esto requiere mucho recurso del lado del intérprete o del ejecutor.
+Hay otra rama que dice que todo esto puede ser reemplazado por instancias (no hay clases) y la herencia simple se resuelve a través de prototipos. Los prototipos son las propiedades del objeto.
+
+Manejo de las variables y validez de las variables
+El alcance de las variables es interno a las funciones. No hay alcance por bloque, sino por funciones (con esto se evitan checkeos en el motor de JS). No hay miembros públicos ni privados. Simplificó el desarrollo del motor de ejecución y permite formas de programar que en otros lenguajes no se logra. Se pueden simular clases con miembros públicos y privados implementados de otra manera.
+No es fuertemente tipado, pero existen los tipos. Hay 6 tipos:
+booleanos    --> True o False
+números      --> En lenguajes tradicionales tenemos enteros, flotantes, flotantes de doble precisión, etc. En JS hay  number nada más. Se representan internamente como números de punto flotante de doble precisión. 
+strings      --> No existe el concepto de char (caracter)
+objetos      --> Todo lo demás (las funciones son objetos, especiales, pero objetos).
+undefined    --> Valor que tienen todas las propiedades que no exiten en un objeto y el lo que devuelve una función cuando no le digo explícitamente que me devuelva algo.
+null         --> Cuando quiero decir explícitamente que algo no existe.
+
+Manejo de memoria
+Tiene un mecanismo que se llama "recolección de basura". Evita que vuele el servidor porque se quedó sin memoria.
+
+Herencia con objetos
+var animal={come:true,camina:true};
+var perro=Object.create(animal);
+El objeto guarda una referencia al objeto base y es una herencia dinámica.
+operador 'delete': borra valor cambiado del objeto creado y lo resetea a su valor de donde hereda. Cuando elimino cosas de los objetos, estoy rompiendo cosas que funcionan en el motor de JS (V8). Se recomienda no hacer 'delete'. Es preferible hacer un objeto nuevo con menos propiedades.
+Herencia en funciones: existe la propiedad prototype que la tienen todas las funciones. Es el objeto base, si modifico el objeto base, se modifican todos los que heredan del mismo
+
+Programación funcional
+Si quiero recorrer un array de nombres y quiero pasarlo todo a mayúsculas: de manera tradicional, recorro el array y reemplazo por el upperCase de cada elemento. Exite la forma funcional: vaso mis programas en diferentes lladas sucesivas a funciones. A mi primer función le paso los parámetros y el resultado a otra, etc. Pienso los procesos como una secuencia de transformaciones de los datos. Si no quiero hacer un 'for' y quiero hacerlo de manera funcional: me fijo en las funciones internas que tiene un array. Por ejemplo, están las funciones map. De este tipo también existen forEach, filter. 
+Reduce : recorre cada elemento del array y se ejecuta una función por cada uno de los elementos y devuelve algo que se va inyectando en la siguiente ejecución sobre el siguiente elemento.
+
+Tarea
+Crear una función que reciba un array de números y que cuente la cantidad de ceros que hay en el array. Y que cuente cualquier cosa que le pida sobre el array. Si quiero contar la cantidad de 1s, la cantidad de números pares
