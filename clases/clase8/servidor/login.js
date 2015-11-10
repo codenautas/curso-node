@@ -31,4 +31,12 @@ router.post("/logout", function (req, res, next) {
     });
 });
 
+router.get("/login/status", function (req, res) {
+    if (req.session.user) {
+        res.end();
+    } else {
+        res.status(401).end();
+    }
+});
+
 module.exports = router;
