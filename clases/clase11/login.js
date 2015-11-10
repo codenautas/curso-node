@@ -5,7 +5,7 @@ var datos = require("./datos");
 var router = express.Router();
 
 
-router.post("/",function(req,res,next){
+router.post("/login",function(req,res,next){
     var nombre=req.body.nombre;
     var clave=req.body.clave;
     datos.login.validar(nombre,clave,function(err,userData){
@@ -21,5 +21,15 @@ router.post("/",function(req,res,next){
         }
     });
 });
+router.post("/logout", function (req, res, next) {
+    req.session.destroy(function (err) {
+        if (err) {
+            next (err);
+            return;
+        }
+        res.end();
+    });
+});
+
 
 module.exports=router;

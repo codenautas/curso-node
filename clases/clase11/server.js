@@ -21,7 +21,7 @@ app.use(session({
     secret:"COOKIE_SECRET"
 }));
 
-app.use("/api/login",login);
+app.use("/api",login);
 app.use("/api/libros", libros);
 
 app.listen(SERVER_PORT, function () {
