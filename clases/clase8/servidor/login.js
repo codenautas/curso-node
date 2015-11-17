@@ -1,6 +1,7 @@
 var express = require("express");
 
 var datos = require("./datos");
+var sesion = require("./sesion");
 
 var router = express.Router();
 
@@ -31,12 +32,8 @@ router.post("/logout", function (req, res, next) {
     });
 });
 
-router.get("/login/status", function (req, res) {
-    if (req.session.user) {
-        res.end();
-    } else {
-        res.status(401).end();
-    }
+router.get("/login/status", sesion.checkUser, function (req, res) {
+    res.end();
 });
 
 module.exports = router;
