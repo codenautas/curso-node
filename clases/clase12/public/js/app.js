@@ -34,6 +34,16 @@ app.run(function($rootScope,$http,$location){
     });
 });
 
+app.service("apiCalls",function($http){
+    return{
+        getLibro: function(){
+            return $http.get("/api/libros/").then(function(res){
+                vm.libros=res.data;
+            });
+        }
+    };
+});
+
 app.controller("listaLibros", function ($location,$http) {
     var vm = this;
     vm.libros = [];

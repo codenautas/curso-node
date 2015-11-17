@@ -1,8 +1,17 @@
 var express = require("express");
 var datos = require("./datos");
+
+function checkUser(req,res,next){
+    if(!req.session.user){
+        res.status(401).end();
+        return;
+    }
+    next();
+}
+
 var router = express.Router();
 
-router.get("/", function (req, res, next) {
+router.get("/",checkUser, function (req, res, next) {
     datos.libros.selectAll(function (err, libros) {
         if (err) {
             next(err);
@@ -12,7 +21,7 @@ router.get("/", function (req, res, next) {
     });
 });
 
-router.post("/", function (req, res, next) {
+router.post("/",checkUser,function (req, res, next) {
     var libro = req.body;
     datos.libros.insert(libro, function (err, _id) {
         if (err) {
@@ -25,7 +34,7 @@ router.post("/", function (req, res, next) {
     });
 });
 
-router.get("/:id", function (req, res, next) {
+router.get("/:id",checkUser, function (req, res, next) {
     var _id = req.params.id;
     datos.libros.select(_id, function (err, libro) {
         if (err) {
@@ -40,11 +49,7 @@ router.get("/:id", function (req, res, next) {
     });
 });
 
-router.delete("/:id", function (req, res, next) {
-    if(!req.session.user){
-        res.status(401).end();
-        return;
-    }
+router.delete("/:id",checkUser, function (req, res, next) {
     var _id = req.params.id;
     datos.libros.delete(_id, function (err, encontrado) {
         if (err) {
@@ -59,7 +64,7 @@ router.delete("/:id", function (req, res, next) {
     });
 });
 
-router.put("/:id", function (req, res, next) {
+router.put("/:id",checkUser, function (req, res, next) {
     var _id = req.params.id;
     var libro = req.body;
     datos.libros.update(_id, libro, function (err, modificado) {
