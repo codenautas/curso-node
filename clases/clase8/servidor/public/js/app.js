@@ -38,13 +38,49 @@ app.run(function ($rootScope, $http, $location) {
     });
 });
 
-app.controller("listaLibros", function ($http, $location) {
+app.service("librosService", function ($http, $location) {
+
+    function notificarError(err) {
+        /* if (err.status === 401) {
+            var backUrl = $location.url();
+            $location.url("/login").search({
+                back: backUrl
+            });
+        } else { */
+            alert("Error: " + err.statusText);
+        // }
+    }
+
+    return {
+        getLibros: function () {
+            return $http.get("/api/libros").then(function (response) {
+                return response.data;
+            }).catch(notificarError);
+        },
+        getLibro: function (_id) {
+            return $http.get("/api/libros/" + _id).then(function (response) {
+                return response.data;
+            }).catch(notificarError);
+        },
+        createLibro: function (libro) {
+            return $http.post("/api/libros", libro).catch(notificarError);
+        },
+        updateLibro: function (_id, libro) {
+            return $http.put("/api/libros/" + _id, libro).catch(notificarError);
+        },
+        deleteLibro: function (_id) {
+            return $http.delete("/api/libros/" + _id).catch(notificarError);
+        }
+    };
+});
+
+app.controller("listaLibros", function ($location, librosService) {
     var vm = this;
 
     vm.libros = [];
 
-    $http.get("/api/libros").then(function (response) {
-        vm.libros = response.data;
+    librosService.getLibros().then(function (libros) {
+        vm.libros = libros;
     });
 
     vm.crear = function () {
@@ -56,7 +92,7 @@ app.controller("listaLibros", function ($http, $location) {
     };
 
     vm.eliminar = function (_id) {
-        $http.delete("/api/libros/" + _id).then(function () {
+        librosService.deleteLibro(_id).then(function () {
             vm.libros = vm.libros.filter(function (libro) {
                 return libro._id !== _id;
             });
@@ -64,25 +100,25 @@ app.controller("listaLibros", function ($http, $location) {
     };
 });
 
-app.controller("detalleLibro", function ($routeParams, $http, $location) {
+app.controller("detalleLibro", function ($routeParams, $location, librosService) {
     var vm = this;
 
     vm._id = $routeParams.id;
     vm.libro = {};
 
     if (vm._id) {
-        $http.get("/api/libros/" + vm._id).then(function (response) {
-            vm.libro = response.data;
+        librosService.getLibro(vm._id).then(function (libro) {
+            vm.libro = libro;
         });
     }
 
     vm.modificar = function () {
         if (vm._id) {
-            $http.put("/api/libros/" + vm._id, vm.libro).then(function () {
+            librosService.updateLibro(vm._id, vm.libro).then(function () {
                 $location.url("/lista");
             });
         } else {
-            $http.post("/api/libros", vm.libro).then(function () {
+            librosService.createLibro(vm.libro).then(function () {
                 $location.url("/lista");
             });
         }
