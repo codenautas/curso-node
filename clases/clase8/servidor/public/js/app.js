@@ -27,9 +27,13 @@ app.run(function ($rootScope, $http, $location) {
         $http.get("/api/login/status").then(function () {
             //
         }, function () {
-            if ($location.path() !== "/login") {
-                $location.url("/login?back=" + $location.url());
+            if ($location.path() === "/login") {
+                return;
             }
+            var backUrl = $location.url();
+            $location.url("/login").search({
+                back: backUrl
+            });
         });
     });
 });
@@ -96,7 +100,7 @@ app.controller("loginController", function ($http, $location) {
             $location.url($location.search().back || "");
         }, function (response) {
             if (response.status === 401) {
-                vm.mensajeError = 'Usuario o clave inválidas'
+                vm.mensajeError = 'Usuario o clave inválidas';
             } else {
                 vm.mensajeError = 'Error desconocido: ' + response.statusText;
             }
