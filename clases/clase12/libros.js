@@ -41,6 +41,10 @@ router.get("/:id", function (req, res, next) {
 });
 
 router.delete("/:id", function (req, res, next) {
+    if(!req.session.user){
+        res.status(401).end();
+        return;
+    }
     var _id = req.params.id;
     datos.libros.delete(_id, function (err, encontrado) {
         if (err) {
