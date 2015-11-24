@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require('express-session');
+var cors = require('cors');
 
 var APP_PORT = 8080;
 var API_PORT = 4000;
@@ -11,6 +12,7 @@ app.listen(APP_PORT, function () {
 });
 
 var api = express();
+api.use(cors());
 api.use(session({
   cookie: {
     maxAge: 1 * 60 * 1000
