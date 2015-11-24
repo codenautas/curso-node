@@ -1,0 +1,13 @@
+{
+  "main": "server.js",
+  "scripts": {},
+  "author": "gabrielm@coderhouse.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.3",
+    "express-session": "^1.12.1"
+  },
+  "scripts": {
+    "postinstall": "cd public && npm install && cd .."
+  }
+}
