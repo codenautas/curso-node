@@ -13,6 +13,7 @@
   <ul ng-hide="vm.error">
     <li ng-repeat="libro in vm.libros">
       {{libro.autor}}: {{libro.titulo}}
+      <button type="button" ng-click="vm.borrar(libro._id)">Borrar</button>
     </li>
   </ul>
   <div ng-show="vm.error">

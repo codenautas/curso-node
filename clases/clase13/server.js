@@ -24,12 +24,17 @@ api.use(session({
 }));
 api.get('/api/libros', function (req, res, next) {
   res.json([{
+    _id: 1,
     titulo: 'El Fin de la Eternidad',
     autor: 'Isaac Asimov'
   }, {
+    _id: 2,
     titulo: '2001 Odisea Espacial',
     autor: 'Arthur Clarke'
   }]);
+});
+api.delete('/api/libros/:_id', function (req, res, next) {
+  res.end();
 });
 api.listen(API_PORT, function () {
   console.log('API en puerto %s', API_PORT);
