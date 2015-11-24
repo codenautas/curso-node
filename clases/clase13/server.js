@@ -12,7 +12,7 @@ app.listen(APP_PORT, function () {
 });
 
 var api = express();
-api.use(cors());
+// api.use(cors());
 api.use(session({
   cookie: {
     maxAge: 1 * 60 * 1000
@@ -22,7 +22,7 @@ api.use(session({
   saveUninitialized: true,
   secret: 'COOKIE_SECRET'
 }));
-api.get('/api/libros', function (req, res, next) {
+api.get('/api/libros', cors(), function (req, res, next) {
   res.json([{
     _id: 1,
     titulo: 'El Fin de la Eternidad',
@@ -33,7 +33,8 @@ api.get('/api/libros', function (req, res, next) {
     autor: 'Arthur Clarke'
   }]);
 });
-api.delete('/api/libros/:_id', function (req, res, next) {
+api.options('*', cors());
+api.delete('/api/libros/:_id', cors(), function (req, res, next) {
   res.end();
 });
 api.listen(API_PORT, function () {
