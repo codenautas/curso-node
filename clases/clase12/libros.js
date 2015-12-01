@@ -1,13 +1,6 @@
 var express = require("express");
 var datos = require("./datos");
-
-function checkUser(req,res,next){
-    if(!req.session.user){
-        res.status(401).end();
-        return;
-    }
-    next();
-}
+var checkUser = require("./sesion").checkUser;
 
 var router = express.Router();
 
@@ -68,6 +61,7 @@ router.put("/:id",checkUser, function (req, res, next) {
     var _id = req.params.id;
     var libro = req.body;
     datos.libros.update(_id, libro, function (err, modificado) {
+       // console.log("PRUEBA3 %j",libro);
         if (err) {
             next(err);
             return;

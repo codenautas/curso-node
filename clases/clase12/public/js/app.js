@@ -34,23 +34,46 @@ app.run(function($rootScope,$http,$location){
     });
 });
 
-app.service("apiCalls",function($http){
+app.service("librosService",function($http){
+    
+    function notificarError(err){
+        alert("Error: "+ err.statusText);
+    }
     return{
-        getLibro: function(){
+        getLibros: function(){
             return $http.get("/api/libros/").then(function(res){
-                vm.libros=res.data;
-            });
+                return res.data;
+            }).catch(notificarError);
+        },
+        deleteLibros: function(_id){
+            return $http.delete("/api/libros/"+_id).then(function(){
+                $http.get("/api/libros/").then(function(res){
+                    return res.data;
+                });
+            }).catch(notificarError);
+        },
+        createLibro: function(libro){
+            return $http.post("/api/libros/",libro).catch(notificarError);
+        },
+        updateLibro: function(_id,libro){
+            return $http.put("/api/libros/"+_id,libro).catch(notificarError);
+        },
+        getLibro: function(_id){
+            return $http.get("/api/libros/"+_id).then(function(res){
+                return res.data;
+            }).catch(notificarError);
         }
     };
 });
 
-app.controller("listaLibros", function ($location,$http) {
+
+
+app.controller("listaLibros", function ($location,$http,librosService) {
     var vm = this;
     vm.libros = [];
-    $http.get("/api/libros/").then(function(res){
-        vm.libros=res.data;
+    librosService.getLibros().then(function(libros){
+        vm.libros= libros;
     });
-    
     vm.crear= function(){
         $location.url("/detalle");
     };
@@ -58,34 +81,34 @@ app.controller("listaLibros", function ($location,$http) {
         $location.url("/detalle/"+_id);
     };
     vm.eliminar= function(_id){
-        $http.delete("/api/libros/"+_id).then(function(){
-            $http.get("/api/libros/").then(function(res){
-                vm.libros=res.data;
-            });
-        });
+        librosService.deleteLibros(_id).then(function(lista){
+            librosService.getLibros().then(function(libros){
+                vm.libros=libros;
+            })
+        })
     };
     
 });
 
-app.controller("detalleLibro", function ($routeParams,$location,$http) {
+app.controller("detalleLibro", function ($routeParams,$location,librosService) {
     var vm = this;
 
     vm._id = $routeParams.id;
     vm.libro = {};
     if(vm._id){
-        $http.get("/api/libros/"+vm._id).then(function(res){
-            vm.libro=res.data;
-        });
+        librosService.getLibro(vm._id).then(function(libro){
+            vm.libro=libro;
+        })
     }
     vm.modificar= function(){
         if(vm._id){
-            $http.put("/api/libros/"+vm._id,vm.libro).then(function(){
+            librosService.updateLibro(vm._id,vm.libro).then(function(){
                 $location.url("/lista");
             });
+            
         }else{
-            $http.post("/api/libros/",vm.libro).then(function(){
+            librosService.createLibro(vm.libro).then(function(){
                 $location.url("/lista");
-                //return resp;
             });
         }
     };

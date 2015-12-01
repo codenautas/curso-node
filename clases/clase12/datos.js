@@ -53,7 +53,7 @@ module.exports = {
         },
         select: function (_id, callback) {
             var query="SELECT * FROM libros where _id=$1"
-            queryPgParams(query, _id, function (err, result) {
+            queryPgParams(query, [_id], function (err, result) {
                 if (err) {
                     callback(err);
                     return;
