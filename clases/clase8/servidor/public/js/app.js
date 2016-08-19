@@ -17,6 +17,18 @@ app.config(function ($routeProvider) {
         });
 });
 
+/*
+app.controller("listaLibros", function ($http, $location) {
+    var vm = this;
+
+    vm.libros = [];
+    
+    vm.crear = function(){
+        $location.
+    };
+});
+*/
+
 app.controller("listaLibros", function ($http, $location) {
     var vm = this;
 
